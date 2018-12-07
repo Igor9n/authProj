@@ -1,30 +1,29 @@
 <?php
 class Authentification
 {
-	protected $auth = false; //Может использоваться только самим объектом класса
+	protected $auth = false; //Изначально мы не залогинены
 	protected $login = "taras"; //Может использоваться только самим объектом класса
 	protected $password = 123; //Может использоваться только самим объектом класса
-	public function isAuth(): bool
+	public function isAuth(): bool //Проверяем статус логина
 	{
 		return $this->auth;
 	}
-	public function auth($log,$pass): bool
+	public function auth($log,$pass): bool //Валидация логина и пароля
 	{
-		if( $log == $this->login && $pass == $this->password)
+		if( $log == $this->login && $pass == $this->password) //Меняем статус аутентификации при совпадении - мы залогинены
 		{
-			$this->auth = true;
+			$this->auth = true; 
 			return $this->isAuth();
 		} else
 		{
-			$this->auth = false;
-			return $this->isAuth();	
+			return $this->isAuth();	//Если пароли не совпадают, возвращает false
 		}
 	}	
-	public function getLogin(): str
+	public function getLogin(): str //Получение логина для вывода
 	{
 		return $_POST['login'];
 	}
-	public function logout(): bool
+	public function logout(): bool //Метод, стирающий данные логина и пароля при вылогинивании, меняет статус аутентификации
 	{
 		unset($_POST['login']);
 		unset($_POST['password']);
@@ -32,3 +31,4 @@ class Authentification
 		return $this->auth;
 	}	
 }
+

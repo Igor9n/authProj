@@ -1,15 +1,13 @@
 <?php
-require_once 'auth.php';
-require_once 'session.php';
+require_once 'auth.php'; //Подключение файла аутентификации один раз
 
 $aobj = new Authentification();
-//$sobj = new Session();
-//$sobj->sessionStart();
-if ( isset($_POST['submit']) )
+
+if ( isset($_POST['submit']) ) //Проверка нажатия кнопки входа
 {
 	 $aobj->auth($_POST['login'], $_POST['password']);
 }
-if ( isset($_POST['logout']) )
+if ( isset($_POST['logout']) ) //Проверка нажатия кнопки выхода
 {
 	$aobj->logout();
 }
@@ -20,7 +18,7 @@ if ( isset($_POST['logout']) )
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <?php
-	if ( $aobj->isAuth() )
+	if ( $aobj->isAuth() ) //Проверка статуса аутентификации для выбора отображаемой информации
 	{?>
     <div class="page-header">
   		<h1>You logged as <?=$_POST['login']?></h1>
@@ -39,7 +37,7 @@ if ( isset($_POST['logout']) )
 </head>
 <body>
 	<?php
-	if ( $aobj->isAuth() )
+	if ( $aobj->isAuth() ) //Проверка статуса аутентификации для выбора отображаемой информации
 	{?>
     <div class="list-group">
   		<a href="https://getbootstrap.com/docs/3.3/components/" target="_blank" class="list-group-item">Bootstrap components</a>
