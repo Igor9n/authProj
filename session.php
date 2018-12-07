@@ -1,41 +1,36 @@
 <?php
+
 class mySession
 {
-	public function mySessionStart() //Старт сессии
+	public static function mySessionStart()
 	{
-		if ( !$this->sessionExists() ) //Если её нет
+		if ( !self::sessionExists() )
 		{
 			session_start();
 		}
 	}
-	protected function getId () //Возвращает ID сесии или ничего при отстутсвии сессии
+	public static function setAuth($log,$pass)
 	{
-		return session_id();
+        $_SESSION['login'] = $log;
+		$_SESSION['password'] = $pass;
 	}
-	public function isAuth() //Проверка статуса аутентификации в сессии
+	public static function sessionExists(): bool
 	{
-		return $_SESSION['auth'];
+        $sessionName = session_name();
+        if (isset($_COOKIE[$sessionName]))
+        {
+            return true;
+        }
+        return false;
 	}
-	public function setAuth($val,$log) //Выставить аутентификацию в сессии
+	public static function destroy()
 	{
-		$_SESSION['auth'] = $val;
-		$_SESSION['login'] = $log;
-	}
-	protected function sessionExists(): bool //Проверка существования сессии
-	{
-		if ( $this->getId() )
-		{
-			return true;
-		}
-		return false;
-	}
-	public function destroy() //Уничтожение сессии и стирание статуса аутентификации
-	{
-		if ( $this->sessionExists() )
-		{
-			unset($_SESSION['auth']);
-			session_destroy();
-		}
+	    if ( self::sessionExists() )
+	    {
+            unset($_SESSION['login']);
+            unset($_SESSION['password']);
+            session_destroy();
+        }
 	}
 } 
 

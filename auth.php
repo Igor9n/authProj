@@ -1,49 +1,41 @@
 <?php
+require_once 'session.php';
+session_start();
+
 class myAuthentification
 {
-	protected $auth = false; //Изначально мы не залогинены
-	protected $login = "admin"; //Может использоваться только самим объектом класса
-	protected $password = 'admin'; //Может использоваться только самим объектом класса
-	public function isAuth(): bool //Проверяем статус логина
+	protected $login = "admin";
+	protected $password = "admin";
+	public function isAuth(): bool
 	{
-		return $this->auth;
+		if ($_SESSION['login'] === $this->login && $_SESSION['password'] === $this->password)
+        {
+            return true;
+        }
+        return false;
 	}
-	public function auth($log,$pass): bool //Валидация логина и пароля
+	public function auth($log,$pass): bool
 	{
-		if( $log === $this->login && $pass === $this->password) //Меняем статус аутентификации при совпадении - мы залогинены
+		if( $log === $this->login && $pass === $this->password) 
 		{
-			?>
-			<div class="alert alert-success alert-dismissible" role="alert">
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			  <strong>Well done!</strong> You successfully logged in.
-			</div>
-			<?php
-			$this->auth = true; 
-			return $this->isAuth();
-		}elseif ( !$log || !$pass ) //Если логин или пароль не заполнены, возвращает false
+			mySession::mySessionStart();
+			mySession::setAuth($log,$pass);
+			return true;
+		}else
 		{
-			?><div class="alert alert-warning alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>Hmm!</strong> You haven't filled in all fields</div><?php
-			return $this->isAuth();
-		}else //Если логин и пароль не совпадают, возвращает false
-		{
-			?><div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>Nope!</strong> Wrong login or password</div><?php
-			return $this->isAuth();	
+			return false;
 		}
 	}	
-	public function getLogin(): str //Получение логина для вывода
+	public function getLogin(): string
 	{
-		return $_POST['login'];
+		return $_SESSION['login'];
 	}
-	public function logout(): bool //Метод, стирающий данные логина и пароля при вылогинивании, меняет статус аутентификации
+	public function logout()
 	{
-		unset($_POST['login']);
-		unset($_POST['password']);
-		$this->auth = false;
-		return $this->auth;
-	}	
+        unset($_POST['login']);
+        unset($_POST['password']);
+	    mySession::destroy();
+	}
+
 }
 
