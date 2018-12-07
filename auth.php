@@ -2,8 +2,8 @@
 class myAuthentification
 {
 	protected $auth = false; //Изначально мы не залогинены
-	protected $login = "taras"; //Может использоваться только самим объектом класса
-	protected $password = '123'; //Может использоваться только самим объектом класса
+	protected $login = "admin"; //Может использоваться только самим объектом класса
+	protected $password = 'admin'; //Может использоваться только самим объектом класса
 	public function isAuth(): bool //Проверяем статус логина
 	{
 		return $this->auth;
