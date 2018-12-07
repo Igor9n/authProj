@@ -11,8 +11,8 @@ if ( isset($_POST['submit']) ) //Проверка нажатия кнопки в
 {
 	if ( $aobj->auth($_POST['login'], $_POST['password']) )
 	{
-		$sobj->setAuth(true);
-	}
+		$sobj->setAuth(true,$_POST['login']);
+	} 
 }
 if ( isset($_POST['logout']) ) //Проверка нажатия кнопки выхода
 {
@@ -24,12 +24,12 @@ if ( isset($_POST['logout']) ) //Проверка нажатия кнопки в
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <?php
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<?php
 	if ( $sobj->isAuth() ) //Проверка статуса аутентификации для выбора отображаемой информации
 	{?>
-    <div class="page-header">
-  		<h1>You logged as <?=$_POST['login']?></h1>
+	<div class="page-header">
+  		<h1>You logged as <?=$_SESSION['login']?></h1>
   		<form method="POST">
 	    	<button type="submit" name="logout" class="btn btn-default">Logout</button>
 		</form>  		
@@ -47,7 +47,7 @@ if ( isset($_POST['logout']) ) //Проверка нажатия кнопки в
 	<?php
 	if ( $sobj->isAuth() ) //Проверка статуса аутентификации для выбора отображаемой информации
 	{?>
-    <div class="list-group">
+	<div class="list-group">
   		<a href="https://getbootstrap.com/docs/3.3/components/" target="_blank" class="list-group-item">Bootstrap components</a>
 		<a href="http://php.net/manual/en/language.oop5.php" target="_blank" class="list-group-item">OOP in PHP</a>
 		<a href="http://php.net/manual/en/book.session.php" target="_blank" class="list-group-item">Sessions in PHP</a>
@@ -65,6 +65,8 @@ if ( isset($_POST['logout']) ) //Проверка нажатия кнопки в
 		</form>
 	</div>
 	<?php
-	}?>	      
+	}?>	 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>     
 </body>
 </html>

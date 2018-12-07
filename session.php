@@ -16,9 +16,10 @@ class mySession
 	{
 		return $_SESSION['auth'];
 	}
-	public function setAuth($val) //Выставить аутентификацию в сессии
+	public function setAuth($val,$log) //Выставить аутентификацию в сессии
 	{
 		$_SESSION['auth'] = $val;
+		$_SESSION['login'] = $log;
 	}
 	protected function sessionExists(): bool //Проверка существования сессии
 	{

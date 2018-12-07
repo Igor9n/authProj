@@ -12,11 +12,26 @@ class myAuthentification
 	{
 		if( $log === $this->login && $pass === $this->password) //Меняем статус аутентификации при совпадении - мы залогинены
 		{
+			?>
+			<div class="alert alert-success alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <strong>Well done!</strong> You successfully logged in.
+			</div>
+			<?php
 			$this->auth = true; 
 			return $this->isAuth();
-		} else
+		}elseif ( !$log || !$pass ) //Если логин или пароль не заполнены, возвращает false
 		{
-			return $this->isAuth();	//Если логин и пароль не совпадают, возвращает false
+			?><div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Hmm!</strong> You haven't filled in all fields</div><?php
+			return $this->isAuth();
+		}else //Если логин и пароль не совпадают, возвращает false
+		{
+			?><div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Nope!</strong> Wrong login or password</div><?php
+			return $this->isAuth();	
 		}
 	}	
 	public function getLogin(): str //Получение логина для вывода
