@@ -1,49 +1,40 @@
 <?php
-class Session
+class mySession
 {
-	public function sessionStart()
+	public function mySessionStart() //Старт сессии
 	{
-		if (!$this->sessionExists() )
+		if ( !$this->sessionExists() ) //Если её нет
 		{
 			session_start();
 		}
 	}
-	public function getName()
+	protected function getId () //Возвращает ID сесии или ничего при отстутсвии сессии
 	{
-		return session_name();
+		return session_id();
 	}
-	public function setName($name) 
-	{
-		session_name($name);
-	}
-	public function isAuth()
+	public function isAuth() //Проверка статуса аутентификации в сессии
 	{
 		return $_SESSION['auth'];
 	}
-	public function setAuth($val)
+	public function setAuth($val) //Выставить аутентификацию в сессии
 	{
 		$_SESSION['auth'] = $val;
 	}
-	public function cookieExists() {}
-	public function sessionExists(): bool 
+	protected function sessionExists(): bool //Проверка существования сессии
 	{
-		if ($this->getName())
+		if ( $this->getId() )
 		{
 			return true;
 		}
 		return false;
 	}
-	public function destroy() 
+	public function destroy() //Уничтожение сессии и стирание статуса аутентификации
 	{
 		if ( $this->sessionExists() )
 		{
+			unset($_SESSION['auth']);
 			session_destroy();
 		}
 	}
 } 
 
-//session_start();
-//echo session_id();
-
-//$_SESSION['login'] = $_POST['login'];
-//$_SESSION['password'] = $_POST['password']; 

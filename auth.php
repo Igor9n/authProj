@@ -1,22 +1,22 @@
 <?php
-class Authentification
+class myAuthentification
 {
 	protected $auth = false; //Изначально мы не залогинены
 	protected $login = "taras"; //Может использоваться только самим объектом класса
-	protected $password = 123; //Может использоваться только самим объектом класса
+	protected $password = '123'; //Может использоваться только самим объектом класса
 	public function isAuth(): bool //Проверяем статус логина
 	{
 		return $this->auth;
 	}
 	public function auth($log,$pass): bool //Валидация логина и пароля
 	{
-		if( $log == $this->login && $pass == $this->password) //Меняем статус аутентификации при совпадении - мы залогинены
+		if( $log === $this->login && $pass === $this->password) //Меняем статус аутентификации при совпадении - мы залогинены
 		{
 			$this->auth = true; 
 			return $this->isAuth();
 		} else
 		{
-			return $this->isAuth();	//Если пароли не совпадают, возвращает false
+			return $this->isAuth();	//Если логин и пароль не совпадают, возвращает false
 		}
 	}	
 	public function getLogin(): str //Получение логина для вывода
